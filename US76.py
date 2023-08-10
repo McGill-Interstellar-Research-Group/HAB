@@ -124,12 +124,21 @@ class us76():
         data = np.array(df)
         print(data)
         z = [self.find_with_P(elem)[0] for elem in data[:,1]]
-        plt.style.use("tableau-colorblind10")
-        plt.grid(True)
-        plt.scatter(data[:, 0], z)
-        plt.title("Altitude over the Duration of the Flight")
-        plt.xlabel("Time (s)")
-        plt.ylabel("Altitude (km)")
+        t = data[:, 0]/60
+        font = {'fontname' : 'Times New Roman'}
+        
+        ax = plt.subplot()
+
+        ax.grid(axis = 'y')
+        ax.spines[['right', 'top']].set_visible(False)
+        ax.plot(t, z, marker = '.', markersize=1, color = 'black')
+
+        ax.set_ylim(0, max(z) - max(z)%5 +5)
+        ax.set_xlim(0, max(t) - max(t)%20 + 20)
+
+
+        plt.xlabel("Time (min.)", **font, size = 12)
+        plt.ylabel("Altitude (km)", **font, size =12)
         plt.show()
         return z
     
@@ -139,12 +148,22 @@ class us76():
         data = np.array(df)
         print(data)
         z = [self.find_with_P(elem)[1] for elem in data[:,1]]
-        plt.style.use("tableau-colorblind10")
-        plt.grid(True)
-        plt.scatter(data[:, 0], z)
-        plt.title("Temperature over the Duration of the Flight")
-        plt.xlabel("Time (s)")
-        plt.ylabel("Temperature (K)")
+        z = np.array(z) - 273.15
+        t = data[:, 0]/60
+
+        font = {'fontname' : 'Times New Roman'}
+        
+        ax = plt.subplot()
+
+        ax.grid(axis = 'y')
+        ax.spines[['right', 'top']].set_visible(False)
+        ax.plot(t, z, marker = '.', markersize=1, color = 'black')
+
+        ax.set_ylim(min(z)-10, max(z) - max(z)%10 +10)
+        ax.set_xlim(0, max(t) - max(t)%20 + 20)
+
+        plt.xlabel("Time (min.)", **font, size = 12)
+        plt.ylabel("Temperature (C)", **font, size = 12)
         plt.show()
         return z
     
